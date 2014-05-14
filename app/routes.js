@@ -72,14 +72,14 @@ exports.sendSuccess = function(val,data , req,res){
 
 	serverApp.get("/findbytitlesearch", function(req,res){
 		var titleText = req.query.titletext;
-		if(titleText || titleText == "") {
+		if(!titleText || titleText == "") {
 			exports.sendError(500, "Title text is empty.", req, res);
 			return;
 		}
 		db.findByTitleSearch(titleText, function(err,notes){
 			if (err) { 
 				console.log(err);
-				exports.sendError(500, "Error reading DB.", req, res);
+				exports.sendError(500, err, req, res);
 				return; 
 			}
 
@@ -95,8 +95,7 @@ exports.sendSuccess = function(val,data , req,res){
 		}
 		db.findByTitle(title, function(err,notes){
 			if (err) { 
-				console.log(err);
-				exports.sendError(500, "Error reading DB.", req, res);
+				exports.sendError(500, err, req, res);
 				return; 
 			}
 
