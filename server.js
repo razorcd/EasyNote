@@ -34,13 +34,24 @@ db.connectDb("testUser", "test");
 // 	console.log(notes);
 // })
 
-db.findByTitle("AAAAAAAAA", function(err, notes){
-	if (err) { console.log(err); return; }
-	console.log("Found by exact title: ");
-	console.log(notes);
-})
+// db.findByTitle("AAAAAAAAA", function(err, notes){
+// 	if (err) { console.log(err); return; }
+// 	console.log("Found by exact title: ");
+// 	console.log(notes);
+// })
 
-
+db.updateById(
+				"53738060b17852c4375f9d8e", 
+				{
+				 title: "1",
+				 text: "1111111",
+				 expire: Date.parse("2019")
+				},
+				function(err){
+					if (err) { console.log(err); return; }
+					console.log("Note updated");
+				}
+);
 
 
 serverApp.configure(function() {

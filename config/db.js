@@ -89,3 +89,18 @@ exports.findByTitle = function(title, cb){
 	})
 
 }
+
+
+//update by ID
+exports.updateById = function(id, newNote, cb){
+	//NoteModel.findById(id, function(err, foundNote){
+		var querry = {_id : id};
+		NoteModel.update(querry, newNote, function(err, nrUpNotes){
+			if (err ) { cb(err); return; }
+			if (nrUpNotes < 1 ) { cb({error : "Can't find ID. No notes were updated"}); return; }
+			cb(null);
+		})
+
+	//})
+
+}
