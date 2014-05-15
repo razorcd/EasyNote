@@ -1,0 +1,96 @@
+<button class="add-button btn btn-default" data-toggle="modal" data-target="#addNoteModal"> Add new note </button>
+<h1>Your notes</h1>
+
+<div ng-controller="MainCtrl">
+	<div class="app-box" ng-repeat="note in notes" data-id="{{note._id}}">
+		<div class="boxbanner"> 
+			<button type="button" class="btn btn-default btn-xs"> - </button>
+			<div class="title" > Title: {{note.title}} </div>
+			<div class="expire"> Expires: {{note.expire}} </div>
+		 </div>
+		<textarea class="text"> {{note.text }} </textarea>
+		<div class="boxfooter"> Created on {{note.createdDate}} by {{note.creatorUser}} </div>
+	</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add New Note</h4>
+      </div>
+
+
+      <div class="modal-body">
+		<form class="form-horizontal" role="form" ng-submit="submitAddNoteForm()">
+		  
+		  <!-- title -->
+		  <div class="form-group">
+		    <label for="inputtitle" class="col-sm-2 control-label">Title: </label>
+		    <div class="col-sm-10">
+		      <input ng-model="inputtitle" type="text" class="form-control" id="inputtitle" placeholder="Title" required>
+		    </div>
+		  </div>
+		  
+		  <!-- text -->
+		  <div class="form-group">
+		    <label for="inputtext" class="col-sm-2 control-label">Text: </label>
+		    <div class="col-sm-10">
+		      <textarea ng-model="inputtext" class="form-control" id="inputtext"> </textarea>
+		    </div>
+		  </div>
+		  
+
+			<!-- datetimepicker -->
+		  <div class="form-group">
+		  	  <label  class="col-sm-2 control-label">Expire: </label>
+                <div datetimepickerelem ng-model="inputdatetime" class='input-group date' id='datetimepicker1'  >
+                    <input   type='text' class="form-control" id="xxxx"/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+
+		  </div>
+
+
+
+
+<!-- 		  
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default">Sign in</button>
+		    </div>
+		  </div>
+ -->
+
+
+
+
+
+
+ 			<!-- buttons -->
+	      <div class="modal-footer">
+	      	<button type="reset"  class="btn btn-default"> Reset  </button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save </button>
+	      </div>
+
+
+		</form>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+</div>
