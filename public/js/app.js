@@ -1,7 +1,4 @@
 var app = angular.module("app", ["ngRoute"]);
-var glob;
-
-
 
 
 var mainCtrl = app.controller("MainCtrl", function($scope, $rootScope, $element,dbService){
@@ -23,6 +20,7 @@ var mainCtrl = app.controller("MainCtrl", function($scope, $rootScope, $element,
 				console.log(err.data);
 				dbService.getAllNotes(function(data){
 					$scope.notes = data;
+					$(".modal-body form")[0].reset()
 					$('#addNoteModal').modal("toggle");
 				});
 
@@ -30,13 +28,45 @@ var mainCtrl = app.controller("MainCtrl", function($scope, $rootScope, $element,
 		});
 		// console.log($scope.temp);
 	}
+
+
+	$scope.deleteNote = function(id){
+		dbService.deleteById(id, function(err){
+			if(false) console.error(err);
+			else {
+				//console.log(err.data);
+				dbService.getAllNotes(function(data){
+					$scope.notes = data;
+				});
+
+			}
+		})
+	}
+
+
+
+	$scope.updateNote = function(note){
+		//console.log(note.title);
+		dbService.updateById(note._id, note.title, note.text, note.expire, function(err){
+			if(err.error) console.error(err);
+			else {
+				console.log(err.data);
+				dbService.getAllNotes(function(data){
+					$scope.notes = data;
+				});
+
+			}
+		})
 	
+	}
+
 })
 
 
 
 
 app.controller("NavBarController", function($scope, $location){
+	console.log($location.path());
 	$scope.getClass = function(path){
 		if ($location.path() == path) return true;
 		else return false;
@@ -48,7 +78,7 @@ app.controller("NavBarController", function($scope, $location){
 
 app.config(function($routeProvider){
 	$routeProvider
-		.when("/", {
+		.when(null, {
 					templateUrl: "views/home.html"
 					}
 		)
@@ -68,6 +98,7 @@ app.service("dbService", function($http){
 	this.getAllNotes = function(cb){
 		$http({method: "GET", url:"/getallnotes"})
 			.success(function(data,status,headers,config){
+				//console.info(data);
 				if (data.error) {
 					cb(null) ;
 				}
@@ -89,7 +120,7 @@ app.service("dbService", function($http){
 			text : inputtext,
 			expire : inputdatetime
 		}
-		console.log(idata);
+		//console.log(idata);
 		$http.post("/addnote", idata)
 		 	.success(function(data,status,headers,config){
 				if (data.error) {
@@ -102,7 +133,47 @@ app.service("dbService", function($http){
 			})
 	}
 
+
+	this.updateById = function(id, newTitle, newText, newExpire, cb){
+		var newdata = {
+			id : id,
+			title : newTitle,
+			text : newText,
+			expire : newExpire
+		}
+		$http.post("/updatebyid", newdata)
+		 	.success(function(data,status,headers,config){
+				if (data.error) {
+					cb(null) ;
+				}
+				cb(data);
+			})
+			.error(function(data,status,headers,config){
+				cb(null);
+			})
+	}
+
+
+
+	this.deleteById = function(id, cb){
+		$http.delete("/deletebyid?id=" + id)
+			.success(function(data,status,headers,config){
+				if (data.error) {
+					cb(null) ;
+				}
+				cb(data);
+			})
+			.error(function(data,status,headers,config){
+				cb(null);
+			})
+
+	}
+
 })
+
+
+
+
 
 
  app.directive("datetimepickerelem", function(){
@@ -112,7 +183,7 @@ app.service("dbService", function($http){
  		link: function(scope, element, attrs, ngModelCtrl){
  			$("#datetimepicker1").on("dp.change", function(e){
  				ngModelCtrl.$setViewValue(element.find("input").val());
- 				console.log(ngModelCtrl);
+ 				//console.log(ngModelCtrl);
  				//scope.$apply();
  			})
 
@@ -120,4 +191,25 @@ app.service("dbService", function($http){
  		}
  	}
 
+ })
+
+
+
+ app.directive("updateable", function(){
+ 	return {
+ 		restrict: "A",
+ 		require: "ngModel",
+ 		link: function(scope, element, attrs, ngModelCtrl){
+
+ 			element.on("blur", function(e){
+ 				//console.log(element.text());
+ 			 	ngModelCtrl.$setViewValue(element.text());
+ 			 	//console.log(scope.note);
+ 			 	scope.$apply();
+ 			 	scope.updateNote(scope.note);
+
+ 			})
+ 		}
+
+ 	}
  })

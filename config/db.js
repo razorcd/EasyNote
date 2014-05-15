@@ -36,7 +36,7 @@ exports.addNote = function(note,cb){
 
 //get list of all notes
 exports.getAllNotes = function(cb){
-	exports.connectDb("testUser", "test");
+	//exports.connectDb("testUser", "test");
 	var querry = NoteModel.find();
 
 	querry.exec(function(err, notes){

@@ -130,7 +130,7 @@ exports.sendSuccess = function(val,data , req,res){
 	})
 
 	serverApp.delete("/deletebyid", function(req,res){
-		var id = req.body.id;
+		var id = req.query.id;
 
 		if(!id || id == "") {
 			exports.sendError(500, "Id field is empty.", req, res);
