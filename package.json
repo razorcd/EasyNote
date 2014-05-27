@@ -1,32 +1,26 @@
 {
-  "name": "EasyNotes",
+  "name": "EasyNotes2",
   "version": "0.1.0",
-  "description": "Easy notes app",
+  "description": "EasyNote",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "directories": {
+    "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/razorcd/EasyNote.git"
+  "dependencies": {
+    "express": "~3.8.0",
+    "mongoose": "~3.8.11",
+    "jasmine-node": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test-db": "jasmine-node test/db-spec.js",
+    "test-dba": "jasmine-node test/db-spec.js --autotest",
+    "start": "node server.js"
   },
   "keywords": [
-    "MEAN",
-    "Node",
-    "Express",
-    "Angular",
-    "Mongo",
-    "Easy",
-    "Notes",
-    "App"
+    "easy",
+    "note"
   ],
   "author": "Razor",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^3.x",
-    "mongoose": "^3.8.9"
-  },
-  "engines": {
-    "node": "0.10.x"
-  }
+  "license": "ISC"
 }
