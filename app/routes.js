@@ -1,6 +1,5 @@
 var express=require("express");
-var db = require("./../config/db.js")
-
+var db = require("./../config/db.js");
 
 exports.sendError = function(val,message , req,res){
 		res.writeHead(val, {"Content-Type":"application/json"});
@@ -23,21 +22,28 @@ exports.sendSuccess = function(val,data , req,res){
 
 
 
+
 	serverApp.post("/addnote",function(req,res){
-		var currentUser = "User1";
+		var data = req.body;
+		// console.log(req.body);
+
+		if( typeof data !== "object") { exports.sendError(500, "Note info not valid", req, res); return }
+		if( typeof data.title !== "string") { exports.sendError(500, "Note info not valid", req, res); return }
+		if( typeof data.text !== "string") { exports.sendError(500, "Note info not valid", req, res); return }
+		if (!( typeof data.expire === "string" || typeof data.expire === "number")) { exports.sendError(500, "Note info not valid", req, res); return }
 		
+		// if (typeof data === string) data= JSON.parse(data);
+		var currentUser = "User1";
 		//exports.sendError(404, "File Not Found", req, res);
-		var newNote = {
-			title: req.body.title,
-			text: req.body.text,
-			expire: req.body.expire,
-			creatorUser: currentUser
+		var	newNote = {
+				title: data.title ,
+				text: data.text ,
+				expire: data.expire ,
+				creatorUser: currentUser 
 		}
-		console.log(newNote);
-		//TODO: VALIDATE
 
 		db.addNote(newNote, function(err){
-			if(err) {
+			if(err && err.error !== null) {
 				console.error(err);
 				exports.sendError(500, "DB error", req, res);
 				return;
@@ -45,6 +51,11 @@ exports.sendSuccess = function(val,data , req,res){
 			exports.sendSuccess(200, "Note added", req, res);
 		})
 	});
+
+
+
+
+
 
 	serverApp.get("/getallnotes", function(req,res){
 		db.getAllNotes(function(err,notes){
@@ -69,6 +80,26 @@ exports.sendSuccess = function(val,data , req,res){
 			exports.sendSuccess(200, notes, req,res);
 		})
 	})
+
+
+	serverApp.get("/findbyid", function(req,res){
+		var id = req.query.id;
+		if(!id || id == "") {
+			exports.sendError(500, "Id field is empty.", req, res);
+			return;
+		}
+		db.findByTheId(id, function(err,notes){
+			if (err) { 
+				console.log(err);
+				exports.sendError(500, err, req, res);
+				return; 
+			}
+
+			exports.sendSuccess(200, notes, req,res);
+		})
+	})
+
+
 
 	serverApp.get("/findbytitlesearch", function(req,res){
 		var titleText = req.query.titletext;
@@ -105,6 +136,12 @@ exports.sendSuccess = function(val,data , req,res){
 
 	serverApp.post("/updatebyid", function(req,res){
 		//TODO : check currentuser = requested;
+		var data = req.body;
+		if( typeof data !== "object") { exports.sendError(500, "Note info not valid", req, res); return }
+		if( typeof data.title !== "string") { exports.sendError(500, "Note info not valid", req, res); return }
+		if( typeof data.text !== "string") { exports.sendError(500, "Note info not valid", req, res); return }
+		if (!( typeof data.expire === "string" || typeof data.expire === "number")) { exports.sendError(500, "Note info not valid", req, res); return }
+		if( typeof data.id !== "string") { exports.sendError(500, "Note info not valid", req, res); return }
 		
 		var id = req.body.id;
 
@@ -125,7 +162,7 @@ exports.sendSuccess = function(val,data , req,res){
 				exports.sendError(500, err, req, res);
 				return;
 			}
-			exports.sendSuccess(200, "Upadated", req,res);
+			exports.sendSuccess(200, "Updated", req,res);
 		})
 	})
 
@@ -152,5 +189,3 @@ exports.sendSuccess = function(val,data , req,res){
 	});
 
 }
-
-
