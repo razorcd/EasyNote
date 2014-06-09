@@ -1,0 +1,39 @@
+.note-box{
+	display: inline-block;
+	position: relative;
+	width:330px;
+	background: #a7e038;
+	padding:40px;
+	margin:15px;
+	font-family: helvetica, arial, sans-serif;
+}
+
+	.note-box:nth-child(7n+0) {	background: #a7e038; }
+	.note-box:nth-child(7n+1) {	background: #f05f42; }
+	.note-box:nth-child(7n+2) {	background: #3598db; }
+	.note-box:nth-child(7n+3) {	background: #efc94c; }
+	.note-box:nth-child(7n+4) {	background: pink; }
+	.note-box:nth-child(7n+5) {	background: cyan; }
+	.note-box:nth-child(7n+6) {	background: magenta; }
+
+	.note-box .note-title {
+		
+		font-size: 22pt;
+		color: #fff;
+		padding: 10px 0 0 10px;
+		text-transform: uppercase;
+	}
+
+	.note-box .note-text {
+		color: #333;
+		font-size: 10pt;
+		padding: 0 10px 10px 10px;
+	}
+
+	.note-box .note-expire {
+		position: absolute;
+		bottom: 4px;
+		left:4px;
+		font-size: 8pt;
+		color: #666;
+	}

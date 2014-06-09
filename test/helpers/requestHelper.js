@@ -1,6 +1,8 @@
+//MAKING HTTP REQUESTS WITH NODE
+
 var http = require("http");
 
-exports.request = function(hostname,port,path,method,data,cb ){   //cb(err,resData, res);
+exports.request = function(hostname,port,path,method,cookie,data,cb ){   //cb(err,resData, res);
 	if (typeof data === "object") data=JSON.stringify(data);
 	var resData = "";
 	var options = {
@@ -9,8 +11,8 @@ exports.request = function(hostname,port,path,method,data,cb ){   //cb(err,resDa
 		path:path,
 		method:method,
 		headers: {
-          //'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Type': 'application/json',
+			'Cookie': cookie,
+          	'Content-Type': 'application/json',
       	}
 	}
 	

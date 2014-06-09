@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="/css/homeview.css">
+<p><br /> &nbsp</p>
+
+<div ng-include="'views/loginView.html'"></div>
+
+<div ng-controller="notesController">
+
+	<div id="buttons" >
+		<button ng-click="addNote()" href="test">ADD NOTE</button>
+	</div>
+
+
+
+
+	<div class="note-box" ng-repeat="n in notes"> 
+
+		<div class="note-title">
+			{{n.title}}
+		</div>
+
+		<div class="note-text">
+			{{n.text}}
+		</div>
+
+		<div class="note-expire">
+			Expires on: {{n.expire.date}} at {{n.expire.time}}
+		</div>
+
+	</div>
+
+<div id="test"> <p>ccccc ls hfa;lshaskl hfaskl fhsadklj hsakldf hsadk fhsadl fhsadlk fhasdkl fhsadlkfj hsadlk hasdlk hfsadlkjf hsadlkj fhasklj fhsdkljf haskljf hsdkj hsadklj hsdkf hsdklf hsadklj haslk hsalkh salk hsadkl haskl hskl hsdkl cccccccc </p> </div>
+
+</div>

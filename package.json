@@ -7,14 +7,24 @@
     "test": "test"
   },
   "dependencies": {
-    "express": "~3.8.0",
+    "express": "~3.4.0",
     "mongoose": "~3.8.11",
+    "passport": "latest",
+    "passport-local": "latest",
+    "connect-flash": "latest",
+    "jwt-simple": "^0.2.0",
+    "bcrypt-nodejs": "0.0.3"
+  },
+  "devDependencies": {
     "jasmine-node": "^1.11.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test-db": "jasmine-node test/db-spec.js",
-    "test-dba": "jasmine-node test/db-spec.js --autotest",
+    "test-db":  "jasmine-node test/app/db/db-notes-func-spec.js",
+    "test-dba": "jasmine-node test/app/db/db-notes-func-spec.js --autotest",
+    "test-routes-notes-func":  "jasmine-node test/app/routes/notes-func-routes-spec.js",
+    "test-routes-notes-funca": "jasmine-node test/app/routes/notes-func-routes-spec.js --autotest",
+    "test-routes-logina": "jasmine-node test/app/routes/user-loginout-routes-spec.js --autotest",
+    "test-routes-login":  "jasmine-node test/app/routes/user-loginout-routes-spec.js",
     "start": "node server.js"
   },
   "keywords": [
